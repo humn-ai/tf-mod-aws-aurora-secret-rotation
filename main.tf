@@ -1,7 +1,7 @@
 resource "aws_secretsmanager_secret" "default" {
-  count               = var.enabled == true && var.secrets != null ? length(var.secrets) : 0
-  name                = lookup(var.secrets[count.index], "name", "")
-  description         = lookup(var.secrets[count.index], "description", "")
+  count               = var.enabled ? 1 : 0
+  name                = lookup(var.secret_config db_name, "")
+  description         = "Managed by Terraform"
   rotation_lambda_arn = aws_lambda_function.lambda.0.arn
   rotation_rules {
     automatically_after_days = var.automatically_after_days
@@ -17,8 +17,8 @@ resource "aws_secretsmanager_secret_version" "default" {
   secret_id     = aws_secretsmanager_secret.default.*.id[count.index]
   secret_string = <<EOF
   {
-    "username": "${lookup(var.secret_config, username, null)}",
-    "password": "${lookup(var.secret_config, password, null)}",
+    "username": "${lookup(var.secret_config, username, "")}",
+    "password": "${lookup(var.secret_config, password, "")}",
   }
   EOF
 }

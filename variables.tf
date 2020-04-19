@@ -95,10 +95,12 @@ variable "secret_config" {
   type = object({
     username = string
     password = string
+    db_name  = string
   })
   default = {
     username = ""
     password = ""
+    db_name  = ""
   }
 }
 
