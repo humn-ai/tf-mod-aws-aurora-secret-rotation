@@ -25,7 +25,7 @@ resource "aws_kms_key" "default" {
       "Effect": "Allow",
       "Principal": {
         "AWS": [
-          "${aws_iam_role.default.0.arn}"
+          "${aws_iam_role.lambda.0.arn}"
         ]
       },
       "Action": [
@@ -42,7 +42,7 @@ resource "aws_kms_key" "default" {
       "Effect": "Allow",
       "Principal": {
         "AWS": [
-          "${aws_iam_role.default.arn}"
+          "${aws_iam_role.lambda.0.arn}"
         ]
       },
       "Action": [

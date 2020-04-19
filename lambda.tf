@@ -61,7 +61,6 @@ resource "aws_iam_policy" "rotation" {
   name   = "lambda-rds-rotation-policy"
   path   = "/"
   policy = data.aws_iam_policy_document.rotation.json
-  tags   = module.policy_label.tags
 }
 
 // Lambda Role
@@ -78,10 +77,10 @@ resource "aws_lambda_function" "lambda" {
   function_name    = "lambda-rds-rotation-function"
   filename         = var.filename
   source_code_hash = filebase64sha256(var.filename)
-  role             = "${aws_iam_role.lambda_rotation.arn}"
+  role             = aws_iam_role.lambda.arn
   handler          = "lambda_function.lambda_handler"
   runtime          = "python2.7"
-  tags             = module.lamda_label.tags
+  tags             = module.lambda_label.tags
 
   vpc_config {
     security_group_ids = var.security_group_ids
