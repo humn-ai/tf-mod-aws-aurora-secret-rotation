@@ -45,14 +45,14 @@ data "aws_iam_policy_document" "rotation" {
 resource "aws_iam_policy_attachment" "execution" {
   count      = var.enabled ? 1 : 0
   name       = "lambda-rds-rotation-execution-policy"
-  roles      = aws_iam_role.lambda.0.name
+  roles      = [aws_iam_role.lambda.0.name]
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
 resource "aws_iam_policy_attachment" "rotation" {
   count      = var.enabled ? 1 : 0
   name       = "lambda-rds-rotation-policy-attachment"
-  roles      = aws_iam_role.lambda.0.name
+  roles      = [aws_iam_role.lambda.0.name]
   policy_arn = aws_iam_policy.rotation.0.arn
 }
 
