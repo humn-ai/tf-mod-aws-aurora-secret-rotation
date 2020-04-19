@@ -1,6 +1,6 @@
 resource "aws_secretsmanager_secret" "default" {
   count               = var.enabled ? 1 : 0
-  name                = "${lookup(var.secret_config, "db_name", "")}-secret"
+  name                = "${lookup(var.secret_config, "dbInstanceIdentifier", "")}-secret"
   description         = "Managed by Terraform"
   rotation_lambda_arn = aws_lambda_function.lambda.0.arn
   rotation_rules {
@@ -19,6 +19,7 @@ resource "aws_secretsmanager_secret_version" "default" {
   {
     "engine": "${lookup(var.secret_config, "engine", "")}",
     "host": "${lookup(var.secret_config, "host", "")}",
+    "dbInstanceIdentifier": "${lookup(var.secret_config, "dbInstanceIdentifier", "")}",
     "username": "${lookup(var.secret_config, "username", "")}",
     "password": "${lookup(var.secret_config, "password", "")}",
     "dbname": "${lookup(var.secret_config, "dbname", "")}",
