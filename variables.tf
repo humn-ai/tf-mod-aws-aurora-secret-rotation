@@ -95,6 +95,7 @@ variable "secret_config" {
   type = object({
     engine               = string
     dbInstanceIdentifier = string
+    host                 = string
     username             = string
     password             = string
     dbname               = string
@@ -103,6 +104,7 @@ variable "secret_config" {
   default = {
     engine               = "mysql"
     dbInstanceIdentifier = ""
+    host                 = ""
     username             = "root"
     password             = ""
     dbname               = ""
