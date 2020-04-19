@@ -17,8 +17,12 @@ resource "aws_secretsmanager_secret_version" "default" {
   secret_id     = aws_secretsmanager_secret.default.*.id[count.index]
   secret_string = <<EOF
   {
+    "engine": "${lookup(var.secret_config, "engine", "")}",
+    "host": "${lookup(var.secret_config, "host", "")}",
     "username": "${lookup(var.secret_config, "username", "")}",
     "password": "${lookup(var.secret_config, "password", "")}",
+    "dbname": "${lookup(var.secret_config, "dbname", "")}",
+    "port": "${lookup(var.secret_config, "port", "")}"
   }
   EOF
 }
