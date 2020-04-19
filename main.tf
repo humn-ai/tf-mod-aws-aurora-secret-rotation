@@ -1,6 +1,6 @@
 resource "aws_secretsmanager_secret" "default" {
   count               = var.enabled ? 1 : 0
-  name                = lookup(var.secret_config, "db_name", "")
+  name                = "${lookup(var.secret_config, "db_name", "")}-secret"
   description         = "Managed by Terraform"
   rotation_lambda_arn = aws_lambda_function.lambda.0.arn
   rotation_rules {
