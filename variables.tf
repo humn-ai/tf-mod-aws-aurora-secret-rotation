@@ -93,14 +93,20 @@ variable "policy" {
 variable "secret_config" {
   description = "(Optional) A list of objects that contain RDS information including `username`, `password`, `port`, `hostname`, and 'arn' to create lambda rotation"
   type = object({
+    engine   = string
+    host     = string
     username = string
     password = string
-    db_name  = string
+    dbname   = string
+    port     = number
   })
   default = {
-    username = ""
+    engine   = "mysql"
+    host     = ""
+    username = "root"
     password = ""
-    db_name  = ""
+    dbname   = ""
+    port     = 3306
   }
 }
 
