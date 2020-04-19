@@ -53,7 +53,7 @@ resource "aws_iam_policy_attachment" "rotation" {
   count      = var.enabled ? 1 : 0
   name       = "lambda-rds-rotation-policy-attachment"
   roles      = aws_iam_role.lambda.0.name
-  policy_arn = aws_iam_policy.rotation.arn
+  policy_arn = aws_iam_policy.rotation.0.arn
 }
 
 resource "aws_iam_policy" "rotation" {
@@ -77,7 +77,7 @@ resource "aws_lambda_function" "lambda" {
   function_name    = "lambda-rds-rotation-function"
   filename         = var.filename
   source_code_hash = filebase64sha256(var.filename)
-  role             = aws_iam_role.lambda.arn
+  role             = aws_iam_role.lambda.0.arn
   handler          = "lambda_function.lambda_handler"
   runtime          = "python2.7"
   tags             = module.lambda_label.tags
