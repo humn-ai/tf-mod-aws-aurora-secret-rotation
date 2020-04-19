@@ -1,5 +1,5 @@
 resource "aws_kms_key" "default" {
-  count                   = var.enabled == true ? 1 : 0
+  count                   = var.enabled ? 1 : 0
   deletion_window_in_days = var.deletion_window_in_days
   enable_key_rotation     = var.enable_key_rotation
   tags                    = module.kms_label.tags
@@ -64,6 +64,6 @@ POLICY
 
 resource "aws_kms_alias" "default" {
   count         = var.enabled == true ? 1 : 0
-  name          = coalesce(var.alias, format("alias/%v", "rds-rotation-key")
+  name          = coalesce(var.alias, format("alias/%v", "rds-rotation-key"))
   target_key_id = aws_kms_key.default.0.id
 }
