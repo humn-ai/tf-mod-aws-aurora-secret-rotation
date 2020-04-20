@@ -103,6 +103,14 @@ resource "aws_lambda_function" "lambda" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "default" {
+  count             = var.enabled ? 1 : 0
+  name              = "/aws/lambda/${aws_lambda_function.lambda.0.id}"
+  retention_in_days = var.automatically_after_days
+  kms_key_id        = aws_kms_key.default.0.id
+  tags              = module.lambda_label.tags
+}
+
 // Lambda Permission
 resource "aws_lambda_permission" "lambda" {
   count         = var.enabled ? 1 : 0
