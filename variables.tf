@@ -94,7 +94,6 @@ variable "secret_config" {
   description = "(Optional) A list of objects that contain RDS information including `username`, `password`, `port`, `hostname`, and 'arn' to create lambda rotation"
   type = object({
     engine               = string
-    dbInstanceIdentifier = string
     host                 = string
     username             = string
     password             = string
@@ -103,7 +102,6 @@ variable "secret_config" {
   })
   default = {
     engine               = "mysql"
-    dbInstanceIdentifier = ""
     host                 = ""
     username             = "root"
     password             = ""

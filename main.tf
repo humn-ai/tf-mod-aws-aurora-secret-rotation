@@ -19,7 +19,6 @@ resource "aws_secretsmanager_secret_version" "default" {
   {
     "engine": "${lookup(var.secret_config, "engine", "")}",
     "host": "${lookup(var.secret_config, "host", "")}",
-    "dbInstanceIdentifier": "${lookup(var.secret_config, "dbInstanceIdentifier", "")}",
     "username": "${lookup(var.secret_config, "username", "")}",
     "password": "${lookup(var.secret_config, "password", "")}",
     "dbname": "${lookup(var.secret_config, "dbname", "")}",
