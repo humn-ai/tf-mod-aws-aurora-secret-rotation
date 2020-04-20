@@ -1,6 +1,6 @@
 resource "aws_secretsmanager_secret" "default" {
   count               = var.enabled ? 1 : 0
-  name                = "${lookup(var.secret_config, "dbInstanceIdentifier", "")}-secret"
+  name                = module.label.id
   description         = "Managed by Terraform"
   rotation_lambda_arn = aws_lambda_function.lambda.0.arn
   rotation_rules {
