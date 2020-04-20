@@ -99,6 +99,7 @@ variable "secret_config" {
     password             = string
     dbname               = string
     port                 = string
+    dbInstanceIdentifier = string
   })
   default = {
     engine               = "mysql"
@@ -106,6 +107,7 @@ variable "secret_config" {
     username             = "root"
     password             = ""
     dbname               = ""
+    dbInstanceIdentifier = ""
     port                 = "3306"
   }
 }
