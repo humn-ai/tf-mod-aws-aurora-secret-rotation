@@ -38,7 +38,7 @@ variable "availability_zones" {
 }
 
 # -----------------------------------------------------------------------------
-# Variables: TF-MOD-AWS-RDS-LAMBDA-ROTATION
+# Variables: TF-MOD-AWS-MYSQL-SECRET-ROTATION
 # -----------------------------------------------------------------------------
 
 variable "enabled" {
@@ -69,25 +69,25 @@ variable "security_group_ids" {
 
 variable "deletion_window_in_days" {
   default     = 10
-  description = "Duration in days after which the key is deleted after destruction of the resource"
+  description = "(Optional) - Duration in days after which the key is deleted after destruction of the resource"
 }
 
 variable "description" {
   type        = string
   default     = "Parameter Store KMS master key"
-  description = "The description of the key as viewed in AWS console"
+  description = "(Optional) - The description of the key as viewed in AWS console"
 }
 
 variable "alias" {
   type        = string
   default     = "alias/secrets"
-  description = "The display name of the alias. The name must start with the word `alias` followed by a forward slash"
+  description = "(Optional) - The display name of the alias. The name must start with the word `alias` followed by a forward slash"
 }
 
 variable "policy" {
   type        = string
   default     = ""
-  description = "A valid KMS policy JSON document. Note that if the policy document is not specific enough (but still valid), Terraform may view the policy as constantly changing in a terraform plan. In this case, please make sure you use the verbose/specific version of the policy."
+  description = "(Optional) - A valid KMS policy JSON document. Note that if the policy document is not specific enough (but still valid), Terraform may view the policy as constantly changing in a terraform plan. In this case, please make sure you use the verbose/specific version of the policy."
 }
 
 variable "secret_config" {
@@ -125,76 +125,45 @@ variable "recovery_window_in_days" {
 variable "enable_key_rotation" {
   type        = bool
   default     = true
-  description = "Specifies whether key rotation is enabled"
+  description = "(Optional) - Specifies whether key rotation is enabled"
 }
 
 # -----------------------------------------------------------------------------
-# Variables: TF-MOD-LABEL - https://github.com/aciem-admin/tf-mod-label
+# Variables: TF-MOD-LABEL
 # -----------------------------------------------------------------------------
 
 variable "namespace" {
   type        = string
   default     = ""
-  description = "Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp'"
+  description = "(Optional) - Namespace, which could be your abbreviated product team, e.g. 'rci', 'mi', 'hp', or 'core'"
 }
 
 variable "environment" {
   type        = string
   default     = ""
-  description = "Environment, e.g. 'prod', 'staging', 'dev', 'pre-prod', 'UAT'"
+  description = "(Optional) - Environment, e.g. 'dev', 'qa', 'staging', 'prod'"
 }
 
 variable "name" {
   type        = string
   default     = ""
-  description = "Solution name, e.g. 'app' or 'jenkins'"
+  description = "(Optional) - Solution name, e.g. 'vault', 'consul', 'keycloak', 'k8s', or 'baseline'"
 }
 
 variable "delimiter" {
   type        = string
   default     = "-"
-  description = "Delimiter to be used between `namespace`, `environment`, `stage`, `name` and `attributes`"
+  description = "(Optional) - Delimiter to be used between `namespace`, `environment`, `stage`, `name` and `attributes`"
 }
 
 variable "attributes" {
   type        = list(string)
   default     = []
-  description = "Additional attributes (e.g. `1`)"
+  description = "(Optional) - Additional attributes (e.g. `1`)"
 }
 
 variable "tags" {
   type        = map(string)
   default     = {}
-  description = "Additional tags (e.g. `map('BusinessUnit','XYZ')`"
-}
-
-
-variable "context" {
-  type = object({
-    namespace           = string
-    environment         = string
-    stage               = string
-    name                = string
-    enabled             = bool
-    delimiter           = string
-    attributes          = list(string)
-    label_order         = list(string)
-    tags                = map(string)
-    additional_tag_map  = map(string)
-    regex_replace_chars = string
-  })
-  default = {
-    namespace           = ""
-    environment         = ""
-    stage               = ""
-    name                = ""
-    enabled             = true
-    delimiter           = ""
-    attributes          = []
-    label_order         = []
-    tags                = {}
-    additional_tag_map  = {}
-    regex_replace_chars = ""
-  }
-  description = "Default context to use for passing state between label invocations"
+  description = "(Optional) - Additional tags"
 }

@@ -56,18 +56,18 @@ resource "aws_iam_policy_attachment" "vpc_execution" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
 }
 
-resource "aws_iam_policy_attachment" "rotation" {
-  count      = var.enabled ? 1 : 0
-  name       = "lambda-rds-rotation-policy-attachment"
-  roles      = [aws_iam_role.lambda.0.name]
-  policy_arn = aws_iam_policy.rotation.0.arn
-}
-
 resource "aws_iam_policy" "rotation" {
   count  = var.enabled ? 1 : 0
   name   = "lambda-rds-rotation-policy"
   path   = "/"
   policy = data.aws_iam_policy_document.rotation.json
+}
+
+resource "aws_iam_policy_attachment" "rotation" {
+  count      = var.enabled ? 1 : 0
+  name       = "lambda-rds-rotation-policy-attachment"
+  roles      = [aws_iam_role.lambda.0.name]
+  policy_arn = aws_iam_policy.rotation.0.arn
 }
 
 // Lambda Role
@@ -86,7 +86,7 @@ resource "aws_lambda_function" "lambda" {
   source_code_hash = filebase64sha256(var.filename)
   role             = aws_iam_role.lambda.0.arn
   handler          = "lambda_function.lambda_handler"
-  runtime          = "python3.7"
+  runtime          = "python2.7"
   tags             = module.lambda_label.tags
 
   vpc_config {

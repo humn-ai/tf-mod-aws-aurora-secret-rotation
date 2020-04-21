@@ -14,7 +14,7 @@ resource "aws_secretsmanager_secret" "default" {
 
 resource "aws_secretsmanager_secret_version" "default" {
   count         = var.enabled ? 1 : 0
-  secret_id     = aws_secretsmanager_secret.default.*.id[count.index]
+  secret_id     = aws_secretsmanager_secret.default.0.id
   secret_string = <<EOF
   {
     "engine": "${lookup(var.secret_config, "engine", "")}",

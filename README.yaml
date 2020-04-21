@@ -1,2 +1,93 @@
-https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html#full-rotation-support
-https://docs.aws.amazon.com/secretsmanager/latest/userguide/reference_available-rotation-templates.html#sar-template-mysql-singleuser
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name: tf-mod-aws-mysql-secret-rotation
+
+# Canonical Git repo
+github_repo: https://github.com/Callumccr/tf-mod-aws-mysql-secret-rotation
+
+# # Badges to display
+# badges:
+#   - name: "Build Status"
+#     image: ""
+#     url: ""
+
+# Short description of this project
+description: |-
+  Use the `tf-mod-aws-mysql-secret-rotation` module to create all the resources to store and rotate a MySQL or Aurora password using the AWS Secrets Manager service.
+
+# External context to include
+include:
+  - "docs/terraform.md"
+
+# Introduction to this project
+introduction: |-
+  The `tf-mod-aws-rds` module will create:
+  * A RDS MySQL Database Secret stored in AWS Secrets Manager
+  * An AWS Lambda function with permission to rotate the MySQL secret (VPC & non-VPC enabled)
+  * The IAM roles and policies to asoociate and grant access for the Lambda function to call the AWS Secrets Manager & KMS Services
+  * An AWS CloudWatch log group for the associated Lambda Function
+
+  ## Pattern
+
+  ![Pattern](https://raw.githubusercontent.com/giuseppeborgese/terraform-aws-secret-manager-with-rotation/master/schema.jpg)
+
+# How to use this module
+usage: |-
+  The below values shown in the usage of this module are purely representative, please replace desired values as required.
+
+  ```hcl
+
+  ```
+
+# How to get up and running with this project
+# quickstart: |-
+
+# Simple and advanced examples of this project
+examples: |-
+  Simple and advanced examples of this project.
+
+  ### Advanced Example 1:
+
+  TO-DO
+
+    ```hcl
+    ```
+
+# Related projects
+related:
+  - name:
+    description:
+    url:
+
+# References
+references:
+  - name: "Databases with Fully Configured and Ready-to-Use Rotation Support"
+    description: "Reference AWS Documentation for this module"
+    url: "https://docs.aws.amazon.com/secretsmanager/latest/userguide/intro.html#full-rotation-support"
+  - name: "AWS RDS MySQL Single User Pattern"
+    description: "Reference AWS Documentation for this module"
+    url: "https://docs.aws.amazon.com/secretsmanager/latest/userguide/reference_available-rotation-templates.html#sar-template-mysql-singleuser"
+
+# Contributor information
+contributors:
+  - name: "Callum Robertson"
+    github: "callumccr"
+    avatar: https://media-exp1.licdn.com/dms/image/C5603AQHb_3oZMZA5YA/profile-displayphoto-shrink_200_200/0?e=1588809600&v=beta&t=5QQQAlHrm1od5fQNZwdjOtbZWvsGcgNBqFRhZWgnPx4
+    homepage: https://www.linkedin.com/in/callum-robertson-1a55b6110/
+
+# # Jira information
+# jira:
+#   - project:
+#     project_url:
+#     epic: 
+#     epic_url:
+#     user_story: 
+#     user_story_url:
+
+      
+---
