@@ -98,7 +98,7 @@ resource "aws_lambda_function" "lambda" {
   description = "Managed by Terraform, Conducts an AWS SecretsManager secret rotation for RDS MySQL using single user rotation scheme"
   environment {
     variables = { #https://docs.aws.amazon.com/general/latest/gr/rande.html#asm_region
-      SECRETS_MANAGER_ENDPOINT = "https://secretsmanager.${data.aws_region.current.name}.amazonaws.com"
+      SECRETS_MANAGER_ENDPOINT = var.secretsmanager_vpc_endpoint == "" ? "https://secretsmanager.${data.aws_region.current.name}.amazonaws.com" : var.secretsmanager_vpc_endpoint
     }
   }
 }

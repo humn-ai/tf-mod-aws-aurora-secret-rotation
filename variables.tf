@@ -112,6 +112,12 @@ variable "secret_config" {
   }
 }
 
+variable "secretsmanager_vpc_endpoint" {
+  description = "(Optional) The VPC endpoint configured for the AWS Secrets Manager service for private access from within the VPC"
+  default     = ""
+  type        = string
+}
+
 variable "automatically_after_days" {
   default     = 30
   description = "(Required) Specifies the number of days between automatic scheduled rotations of the secret"
