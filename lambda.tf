@@ -86,7 +86,7 @@ resource "aws_lambda_function" "lambda" {
   source_code_hash = filebase64sha256(var.filename)
   role             = aws_iam_role.lambda.0.arn
   handler          = "lambda_function.lambda_handler"
-  runtime          = "python2.7"
+  runtime          = "python3.7"
   tags             = module.lambda_label.tags
 
   vpc_config {
