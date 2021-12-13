@@ -1,9 +1,9 @@
 terraform {
-  required_version = "~> 0.12"
+  required_version = "~> 0.13"
 
   required_providers {
-    aws   = "~> 2.0"
-    local = "~> 1.2"
-    null  = "~> 2.0"
+    aws   = "~> 3.69.0"
+    local = "~> 2.1"
+    null  = "~> 3.1.0"
   }
 }

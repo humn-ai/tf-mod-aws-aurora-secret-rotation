@@ -43,12 +43,12 @@
 
 [![README Header][logo]][website]
 
-# tf-mod-aws-mysql-secret-rotation
+# tf-mod-aws-aurora-secret-rotation
 
 ## Module description
 
 
-Use the `tf-mod-aws-mysql-secret-rotation` module to create all the resources to store and rotate a MySQL or Aurora password using the AWS Secrets Manager service.
+Use the `tf-mod-aws-aurora-secret-rotation` module to create all the resources to store and rotate a Aurora password using the AWS Secrets Manager service.
 
 
 
@@ -57,7 +57,7 @@ Use the `tf-mod-aws-mysql-secret-rotation` module to create all the resources to
 
 ## Introduction
 
-The `tf-mod-aws-rds` module will create:
+The `tf-mod-aws-aurora-secret-rotation` module will create:
 * A RDS MySQL Database Secret stored in AWS Secrets Manager
 * An AWS Lambda function with permission to rotate the MySQL secret (VPC & non-VPC enabled)
 * The IAM roles and policies to asoociate and grant access for the Lambda function to call the AWS Secrets Manager & KMS Services
@@ -72,7 +72,7 @@ The `tf-mod-aws-rds` module will create:
 ## Usage
 
 **IMPORTANT:** The `master` branch is used in `source` just as an example. In your code, do not pin to `master` because there may be breaking changes between releases.
-Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://github.com/https://github.com/Callumccr/tf-mod-aws-mysql-secret-rotation/releases).
+Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://github.com/https://github.com/humn-ai/tf-mod-aws-aurora-secret-rotation/releases).
 
 
 The below values shown in the usage of this module are purely representative, please replace desired values as required.
@@ -172,7 +172,7 @@ For additional context, refer to some of these links.
 
 **Got a question?** We got answers. 
 
-File a Github [issue](https://github.com/Callumccr/tf-mod-aws-mysql-secret-rotation/issues), or message us on [Slack][slack]
+File a Github [issue](https://github.com/humn-ai/tf-mod-aws-aurora-secret-rotation/issues), or message us on [Slack][slack]
 
 
 ### Contributors
@@ -197,9 +197,9 @@ File a Github [issue](https://github.com/Callumccr/tf-mod-aws-mysql-secret-rotat
 
 [![README Footer][logo]][website]
 
-  [logo]: https://wariva-github-assets.s3.eu-west-2.amazonaws.com/logo.png
-  [website]: https://www.linkedin.com/company/52152765/admin/
-  [github]: https://github.com/Callumccr
-  [slack]: https://wariva.slack.com
+  [logo]: https://humnai-web-assests.s3-eu-west-1.amazonaws.com/humn-logo.png
+  [website]: https://https://humn.ai/
+  [github]: https://github.com/humn-ai/tf-humn-iac-live
+  [slack]: humncloud.slack.com
   [linkedin]: https://www.linkedin.com/in/callum-robertson-1a55b6110/
   [terraform_modules]: https://github.com/Callumccr

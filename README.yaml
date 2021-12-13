@@ -5,10 +5,10 @@
 #
 
 # Name of this project
-name: tf-mod-aws-mysql-secret-rotation
+name: tf-mod-aws-aurora-secret-rotation
 
 # Canonical Git repo
-github_repo: https://github.com/Callumccr/tf-mod-aws-mysql-secret-rotation
+github_repo: https://github.com/humn-ai/tf-mod-aws-aurora-secret-rotation
 
 # # Badges to display
 # badges:
@@ -18,7 +18,7 @@ github_repo: https://github.com/Callumccr/tf-mod-aws-mysql-secret-rotation
 
 # Short description of this project
 description: |-
-  Use the `tf-mod-aws-mysql-secret-rotation` module to create all the resources to store and rotate a MySQL or Aurora password using the AWS Secrets Manager service.
+  Use the `tf-mod-aws-aurora-secret-rotation` module to create all the resources to store and rotate a Aurora password using the AWS Secrets Manager service.
 
 # External context to include
 include:
@@ -26,7 +26,7 @@ include:
 
 # Introduction to this project
 introduction: |-
-  The `tf-mod-aws-rds` module will create:
+  The `tf-mod-aws-aurora-secret-rotation` module will create:
   * A RDS MySQL Database Secret stored in AWS Secrets Manager
   * An AWS Lambda function with permission to rotate the MySQL secret (VPC & non-VPC enabled)
   * The IAM roles and policies to asoociate and grant access for the Lambda function to call the AWS Secrets Manager & KMS Services
