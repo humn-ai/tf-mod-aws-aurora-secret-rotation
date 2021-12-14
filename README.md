@@ -58,10 +58,13 @@ Use the `tf-mod-aws-aurora-secret-rotation` module to create all the resources t
 ## Introduction
 
 The `tf-mod-aws-aurora-secret-rotation` module will create:
-* A RDS MySQL Database Secret stored in AWS Secrets Manager
-* An AWS Lambda function with permission to rotate the MySQL secret (VPC & non-VPC enabled)
+* A RDS Database Secret stored in AWS Secrets Manager
+* An AWS Lambda function with permission to rotate the Postgres/MySQL secret (VPC & non-VPC enabled)
 * The IAM roles and policies to asoociate and grant access for the Lambda function to call the AWS Secrets Manager & KMS Services
 * An AWS CloudWatch log group for the associated Lambda Function
+
+* Humn SRE only tested on Postgres, not with MySQL yet
+* Code logic can be found in this [repo])(https://github.com/aws-samples/aws-secrets-manager-rotation-lambdas)
 
 ## Pattern
 
@@ -109,7 +112,7 @@ TO-DO
 | availability\_zones | (Required) - The AWS avaialbility zones (e.g. ap-southeast-2a/b/c). Autoloaded from region.tfvars. | `list(string)` | n/a | yes |
 | alias | (Optional) - The display name of the alias. The name must start with the word `alias` followed by a forward slash | `string` | `"alias/secrets"` | no |
 | attributes | (Optional) - Additional attributes (e.g. `1`) | `list(string)` | `[]` | no |
-| automatically\_after\_days | (Required) Specifies the number of days between automatic scheduled rotations of the secret | `number` | `30` | no |
+| automatically\_after\_days | (Required) Specifies the number of days between automatic scheduled rotations of the secret | `number` | `360` | no |
 | aws\_account\_id | The AWS account id of the provider being deployed to (e.g. 12345678). Autoloaded from account.tfvars | `string` | `""` | no |
 | aws\_assume\_role\_arn | (Optional) - ARN of the IAM role when optionally connecting to AWS via assumed role. Autoloaded from account.tfvars. | `string` | `""` | no |
 | aws\_assume\_role\_external\_id | (Optional) - The external ID to use when making the AssumeRole call. | `string` | `""` | no |
@@ -126,7 +129,7 @@ TO-DO
 | namespace | (Optional) - Namespace, which could be your abbreviated product team, e.g. 'rci', 'mi', 'hp', or 'core' | `string` | `""` | no |
 | policy | (Optional) - A valid KMS policy JSON document. Note that if the policy document is not specific enough (but still valid), Terraform may view the policy as constantly changing in a terraform plan. In this case, please make sure you use the verbose/specific version of the policy. | `string` | `""` | no |
 | recovery\_window\_in\_days | (Optional) Specifies the number of days that AWS Secrets Manager waits before it can delete the secret. This value can be 0 to force deletion without recovery or range from 7 to 30 days. The default value is 30. | `number` | `0` | no |
-| secret\_config | (Optional) A list of objects that contain RDS information including `username`, `password`, `port`, `hostname`, and 'arn' to create lambda rotation | <code><pre>object({<br>    engine               = string<br>    host                 = string<br>    username             = string<br>    password             = string<br>    dbname               = string<br>    port                 = string<br>    dbInstanceIdentifier = string<br>  })<br></pre></code> | <code><pre>{<br>  "dbInstanceIdentifier": "",<br>  "dbname": "",<br>  "engine": "mysql",<br>  "host": "",<br>  "password": "",<br>  "port": "3306",<br>  "username": "root"<br>}<br></pre></code> | no |
+| secret\_config | (Optional) A list of objects that contain RDS information including `username`, `password`, `port`, `hostname`, and 'arn' to create lambda rotation | <code><pre>object({<br>    engine               = string<br>    host                 = string<br>    username             = string<br>    password             = string<br>    dbname               = string<br>    port                 = string<br>    dbInstanceIdentifier = string<br>  })<br></pre></code> | <code><pre>{<br>  "dbInstanceIdentifier": "",<br>  "dbname": "",<br>  "engine": "postgres/mysql",<br>  "host": "",<br>  "password": "",<br>  "port": "3306",<br>  "username": "root"<br>}<br></pre></code> | no |
 | secretsmanager\_vpc\_endpoint | (Optional) The VPC endpoint configured for the AWS Secrets Manager service for private access from within the VPC | `string` | `""` | no |
 | security\_group\_ids | (Optional) - List of Security Group IDs that are allowed ingress to the Lambda function | `list(string)` | `[]` | no |
 | subnet\_ids | (Required) - A list of subnet IDs associated with the Lambda function. | `list(string)` | `[]` | no |

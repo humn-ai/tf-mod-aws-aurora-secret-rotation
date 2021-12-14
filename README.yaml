@@ -27,10 +27,13 @@ include:
 # Introduction to this project
 introduction: |-
   The `tf-mod-aws-aurora-secret-rotation` module will create:
-  * A RDS MySQL Database Secret stored in AWS Secrets Manager
-  * An AWS Lambda function with permission to rotate the MySQL secret (VPC & non-VPC enabled)
+  * A RDS Database Secret stored in AWS Secrets Manager
+  * An AWS Lambda function with permission to rotate the Postgres/MySQL secret (VPC & non-VPC enabled)
   * The IAM roles and policies to asoociate and grant access for the Lambda function to call the AWS Secrets Manager & KMS Services
   * An AWS CloudWatch log group for the associated Lambda Function
+
+  * Humn SRE only tested on Postgres, not with MySQL yet
+  * Code logic can be found in this [repo])(https://github.com/aws-samples/aws-secrets-manager-rotation-lambdas)
 
   ## Pattern
 

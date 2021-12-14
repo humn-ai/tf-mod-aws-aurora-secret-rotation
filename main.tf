@@ -22,8 +22,7 @@ resource "aws_secretsmanager_secret_version" "default" {
     "username": "${lookup(var.secret_config, "username", "")}",
     "password": "${lookup(var.secret_config, "password", "")}",
     "dbname": "${lookup(var.secret_config, "dbname", "")}",
-    "port": "${lookup(var.secret_config, "port", "")}",
-    "dbInstanceIdentifier": "${lookup(var.secret_config, "dbInstanceIdentifier", "")}"
+    "port": "${lookup(var.secret_config, "port", "")}"
   }
   EOF
 }

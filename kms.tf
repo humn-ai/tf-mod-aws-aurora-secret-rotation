@@ -3,7 +3,7 @@ resource "aws_kms_key" "default" {
   deletion_window_in_days = var.deletion_window_in_days
   enable_key_rotation     = var.enable_key_rotation
   tags                    = module.kms_label.tags
-  description             = "RDS MySQL Lambda rotation key, Managed by Terraform"
+  description             = "RDS Lambda rotation key, Managed by Terraform"
   policy                  = <<POLICY
 {
   "Id": "key-consolepolicy-3",

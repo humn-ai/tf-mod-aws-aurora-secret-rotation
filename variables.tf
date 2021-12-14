@@ -47,9 +47,9 @@ variable "enabled" {
   default     = true
 }
 
-variable "filename" {
+variable "dbclusteridentifier" {
   type        = string
-  description = "(Optional) - The path to the function's deployment package within the local filesystem. If defined, The s3_-prefixed options cannot be used."
+  description = "(Required) - The dbclusteridentifier of the rds cluster."
   default     = ""
 }
 
@@ -93,22 +93,20 @@ variable "policy" {
 variable "secret_config" {
   description = "(Optional) A list of objects that contain RDS information including `username`, `password`, `port`, `hostname`, and 'arn' to create lambda rotation"
   type = object({
-    engine               = string
-    host                 = string
-    username             = string
-    password             = string
-    dbname               = string
-    port                 = string
-    dbInstanceIdentifier = string
+    engine   = string
+    host     = string
+    username = string
+    password = string
+    dbname   = string
+    port     = string
   })
   default = {
-    engine               = "mysql"
-    host                 = ""
-    username             = "root"
-    password             = ""
-    dbname               = ""
-    dbInstanceIdentifier = ""
-    port                 = "3306"
+    engine   = "postgres"
+    host     = ""
+    username = "root"
+    password = ""
+    dbname   = ""
+    port     = "5432"
   }
 }
 
@@ -119,7 +117,7 @@ variable "secretsmanager_vpc_endpoint" {
 }
 
 variable "automatically_after_days" {
-  default     = 30
+  default     = 360
   description = "(Required) Specifies the number of days between automatic scheduled rotations of the secret"
 }
 
