@@ -129,7 +129,7 @@ resource "aws_lambda_function" "lambda" {
   environment {
     variables = { #https://docs.aws.amazon.com/general/latest/gr/rande.html#asm_region
       SECRETS_MANAGER_ENDPOINT = var.secretsmanager_vpc_endpoint == "" ? "https://secretsmanager.${data.aws_region.current.name}.amazonaws.com" : var.secretsmanager_vpc_endpoint
-      EXCLUDE_CHARACTERS = "+*&-=$(){}~!;:/@\"'\\|`#"
+      EXCLUDE_CHARACTERS = "<>+*&-=$(){}~!;:/@\"'\\|`#"
     }
   }
 }
