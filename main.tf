@@ -1,7 +1,7 @@
 resource "aws_secretsmanager_secret" "default" {
   count               = var.enabled ? 1 : 0
-  name                = module.label.id
-  description         = "Managed by Terraform"
+  name                = "humn/${var.environment}/rds/${var.name}"
+  description         = "RDS secret for ${var.name}"
   rotation_lambda_arn = aws_lambda_function.lambda.0.arn
   rotation_rules {
     automatically_after_days = var.automatically_after_days
