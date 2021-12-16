@@ -55,28 +55,28 @@ data "aws_iam_policy_document" "rotation" {
 
 resource "aws_iam_policy_attachment" "basic_execution" {
   count      = var.enabled ? 1 : 0
-  name       = "lambda-rds-rotation-execution-policy-${var.name}"
+  name       = "lambda-rds-rotation-execution-policy-${var.environment}-${var.name}"
   roles      = [aws_iam_role.lambda.0.name]
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
 resource "aws_iam_policy_attachment" "vpc_execution" {
   count      = var.enabled ? 1 : 0
-  name       = "lambda-rds-rotation-execution-policy-${var.name}"
+  name       = "lambda-rds-rotation-execution-policy-${var.environment}-${var.name}"
   roles      = [aws_iam_role.lambda.0.name]
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
 }
 
 resource "aws_iam_policy" "rotation" {
   count  = var.enabled ? 1 : 0
-  name   = "lambda-rds-rotation-policy-${var.name}"
+  name   = "lambda-rds-rotation-policy-${var.environment}-${var.name}"
   path   = "/"
   policy = data.aws_iam_policy_document.rotation.json
 }
 
 resource "aws_iam_policy_attachment" "rotation" {
   count      = var.enabled ? 1 : 0
-  name       = "lambda-rds-rotation-policy-attachment-${var.name}"
+  name       = "lambda-rds-rotation-policy-attachment-${var.environment}-${var.name}"
   roles      = [aws_iam_role.lambda.0.name]
   policy_arn = aws_iam_policy.rotation.0.arn
 }
@@ -84,7 +84,7 @@ resource "aws_iam_policy_attachment" "rotation" {
 // Lambda Role
 resource "aws_iam_role" "lambda" {
   count              = var.enabled ? 1 : 0
-  name               = "lambda-rds-rotation-role-${var.name}"
+  name               = "lambda-rds-rotation-role-${var.environment}-${var.name}"
   assume_role_policy = data.aws_iam_policy_document.assume.json
   tags               = module.role_label.tags
 }
@@ -110,7 +110,7 @@ locals {
 
 resource "aws_lambda_function" "lambda" {
   count            = var.enabled ? 1 : 0
-  function_name    = "lambda-rds-rotation-function-${var.name}"
+  function_name    = "lambda-rds-rotation-function-${var.environment}-${var.name}"
   filename         = local.output_path
   source_code_hash = local.source_code_hash
   role             = aws_iam_role.lambda.0.arn
