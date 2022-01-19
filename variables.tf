@@ -84,6 +84,12 @@ variable "alias" {
   description = "(Optional) - The display name of the alias. The name must start with the word `alias` followed by a forward slash"
 }
 
+variable "kms_admin" {
+  type        = string
+  default     = "root"
+  description = "(Optional) - KMS Key policy admin. No need the whole ARN, just the name e.g.: role/kms-admin-role"
+}
+
 variable "policy" {
   type        = string
   default     = ""

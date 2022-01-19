@@ -14,7 +14,7 @@ resource "aws_kms_key" "default" {
       "Effect": "Allow",
       "Principal": {
         "AWS": [
-          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/humn-terraform-role"
+          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:${var.kms_admin}"
         ]
       },
       "Action": "kms:*",
