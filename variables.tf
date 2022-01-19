@@ -85,9 +85,9 @@ variable "alias" {
 }
 
 variable "kms_admin" {
-  type        = string
-  default     = "root"
-  description = "(Optional) - KMS Key policy admin. No need the whole ARN, just the name e.g.: role/kms-admin-role"
+  type        = list(string)
+  default     = []
+  description = "(Required) - KMS Key policy admin. List of ARNs for the KMS admin"
 }
 
 variable "policy" {
