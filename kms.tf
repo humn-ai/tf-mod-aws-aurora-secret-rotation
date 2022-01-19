@@ -10,6 +10,24 @@ resource "aws_kms_key" "default" {
   "Version": "2012-10-17",
   "Statement": [
     {
+      "Sid": "Allow Terraform / Atlantis",
+      "Effect": "Allow",
+      "Principal": {
+          "AWS": "arn:aws:iam::345041872479:role/humn-terraform-role"
+      },
+      "Action": "kms:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "Allow DevOps Access",
+      "Effect": "Allow",
+      "Principal": {
+          "AWS": "arn:aws:iam::345041872479:role/humnai-prod-devops-role"
+      },
+      "Action": "kms:*",
+      "Resource": "*"
+    },
+    {
       "Sid": "Allow use of the key",
       "Effect": "Allow",
       "Principal": {
