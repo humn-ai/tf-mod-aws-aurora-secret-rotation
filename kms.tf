@@ -1,65 +1,75 @@
+data "aws_iam_policy_document" "kms_policy" {
+  statement {
+    sid = "Enable IAM User Permissions"
+
+    actions = [
+      "kms:*"
+    ]
+
+    resources = [
+      "*",
+    ]
+
+    principals {
+      type        = "AWS"
+      identifiers = var.kms_admin
+    }
+  }
+
+  statement {
+    sid = "Allow use of the key"
+
+    actions = [
+      "kms:Encrypt",
+      "kms:Decrypt",
+      "kms:ReEncrypt*",
+      "kms:GenerateDataKey*",
+      "kms:DescribeKey"
+    ]
+
+    resources = [
+      "*",
+    ]
+
+    principals {
+      type        = "AWS"
+      identifiers = [aws_iam_role.lambda.0.arn]
+    }
+  }
+
+  statement {
+    sid = "Allow attachment of persistent resources"
+
+    actions = [
+      "kms:CreateGrant",
+      "kms:ListGrants",
+      "kms:RevokeGrant"
+    ]
+
+    resources = [
+      "*",
+    ]
+
+    principals {
+      type        = "AWS"
+      identifiers = [aws_iam_role.lambda.0.arn]
+    }
+
+    condition {
+      test     = "Bool"
+      variable = "kms:GrantIsForAWSResource"
+      values = ["true"]
+    }
+  }
+}
+
 resource "aws_kms_key" "default" {
   count                   = var.enabled ? 1 : 0
   deletion_window_in_days = var.deletion_window_in_days
   enable_key_rotation     = var.enable_key_rotation
   tags                    = module.kms_label.tags
   description             = "RDS Lambda rotation key, Managed by Terraform"
-  policy                  = <<POLICY
-{
-  "Id": "key-consolepolicy-3",
-  "Version": "2012-10-17",
-  "Statement": [
-     {
-      "Sid": "Enable IAM User Permissions",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": [
-          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:${var.kms_admin}"
-        ]
-      },
-      "Action": "kms:*",
-      "Resource": "*"
-    },
-    {
-      "Sid": "Allow use of the key",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": [
-          "${aws_iam_role.lambda.0.arn}"
-        ]
-      },
-      "Action": [
-        "kms:Encrypt",
-        "kms:Decrypt",
-        "kms:ReEncrypt*",
-        "kms:GenerateDataKey*",
-        "kms:DescribeKey"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Sid": "Allow attachment of persistent resources",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": [
-          "${aws_iam_role.lambda.0.arn}"
-        ]
-      },
-      "Action": [
-        "kms:CreateGrant",
-        "kms:ListGrants",
-        "kms:RevokeGrant"
-      ],
-      "Resource": "*",
-      "Condition": {
-        "Bool": {
-          "kms:GrantIsForAWSResource": "true"
-        }
-      }
-    }
-  ]
-}
-POLICY
+  policy                  = data.aws_iam_policy_document.kms_policy.json
 }
 
 resource "aws_kms_alias" "default" {
