@@ -9,20 +9,13 @@ resource "aws_kms_key" "default" {
   "Id": "key-consolepolicy-3",
   "Version": "2012-10-17",
   "Statement": [
-    {
-      "Sid": "Allow Terraform / Atlantis",
+     {
+      "Sid": "Enable IAM User Permissions",
       "Effect": "Allow",
       "Principal": {
-          "AWS": "arn:aws:iam::345041872479:role/humn-terraform-role"
-      },
-      "Action": "kms:*",
-      "Resource": "*"
-    },
-    {
-      "Sid": "Allow DevOps Access",
-      "Effect": "Allow",
-      "Principal": {
-          "AWS": "arn:aws:iam::345041872479:role/humnai-prod-devops-role"
+        "AWS": [
+          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/humn-terraform-role"
+        ]
       },
       "Action": "kms:*",
       "Resource": "*"
