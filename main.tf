@@ -1,13 +1,18 @@
+data "aws_kms_alias" "default" {
+  count = var.existing_kms_key_alias != "" ? 1 : 0
+  name  = "alias/${var.existing_kms_key_alias}"
+}
+
 resource "aws_secretsmanager_secret" "default" {
   count               = var.enabled ? 1 : 0
-  name                = "humn/${var.environment}/rds/${var.name}"
+  name                = var.existing_kms_key_alias != "" ? "humn/${var.environment}/${var.existing_kms_key_alias}/rds/${var.name}" : "humn/${var.environment}/rds/${var.name}"
   description         = "RDS secret for ${var.name}"
   rotation_lambda_arn = aws_lambda_function.lambda.0.arn
   rotation_rules {
     automatically_after_days = var.automatically_after_days
   }
   recovery_window_in_days = var.recovery_window_in_days
-  kms_key_id              = aws_kms_key.default.0.key_id
+  kms_key_id              = data.aws_kms_alias.default.0.target_key_arn
   tags                    = module.label.tags
   depends_on              = []
 }
