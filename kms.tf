@@ -72,7 +72,7 @@ resource "aws_kms_key" "default" {
   enable_key_rotation     = var.enable_key_rotation
   tags                    = module.kms_label.tags
   description             = "RDS Lambda rotation key, Managed by Terraform"
-  policy                  = data.aws_iam_policy_document.kms_policy.json
+  policy                  = data.aws_iam_policy_document.kms_policy.0.json
 }
 
 resource "aws_kms_alias" "default" {

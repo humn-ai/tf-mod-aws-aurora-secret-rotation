@@ -31,7 +31,6 @@ variable "aws_assume_role_external_id" {
   type        = string
   default     = ""
 }
-existing_kms_key_alias
 
 variable "existing_kms_key_alias" {
   description = "(Optional) - The display name of the alias. If no existing alias is specified, terraform will create one."
