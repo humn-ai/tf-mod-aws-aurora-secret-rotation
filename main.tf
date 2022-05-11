@@ -12,14 +12,14 @@ resource "aws_secretsmanager_secret" "default" {
     automatically_after_days = var.automatically_after_days
   }
   recovery_window_in_days = var.recovery_window_in_days
-  kms_key_id              = data.aws_kms_alias.default.0.id
+  kms_key_id              = data.aws_kms_alias.default.0.target_key_arn
   tags                    = module.label.tags
   depends_on              = []
 }
 
 resource "aws_secretsmanager_secret_version" "default" {
   count         = var.enabled ? 1 : 0
-  secret_id     = aws_secretsmanager_secret.default.0.target_key_arn
+  secret_id     = aws_secretsmanager_secret.default.0.id
   secret_string = <<EOF
   {
     "engine": "${lookup(var.secret_config, "engine", "")}",
