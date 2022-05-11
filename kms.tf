@@ -1,4 +1,7 @@
+
+
 data "aws_iam_policy_document" "kms_policy" {
+  count = var.enabled == true && var.existing_kms_key_alias == "" ? 1 : 0
   statement {
     sid = "Enable IAM User Permissions"
 
@@ -58,13 +61,13 @@ data "aws_iam_policy_document" "kms_policy" {
     condition {
       test     = "Bool"
       variable = "kms:GrantIsForAWSResource"
-      values = ["true"]
+      values   = ["true"]
     }
   }
 }
 
 resource "aws_kms_key" "default" {
-  count                   = var.enabled ? 1 : 0
+  count                   = var.enabled == true && var.existing_kms_key_alias == "" ? 1 : 0
   deletion_window_in_days = var.deletion_window_in_days
   enable_key_rotation     = var.enable_key_rotation
   tags                    = module.kms_label.tags
@@ -73,7 +76,7 @@ resource "aws_kms_key" "default" {
 }
 
 resource "aws_kms_alias" "default" {
-  count         = var.enabled == true ? 1 : 0
+  count         = var.enabled == true && var.existing_kms_key_alias == "" ? 1 : 0
   name          = coalesce(var.alias, format("alias/%v", "rds-rotation-key"))
   target_key_id = aws_kms_key.default.0.id
 }
