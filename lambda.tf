@@ -24,6 +24,17 @@ data "aws_iam_policy_document" "rotation" {
       "arn:aws:lambda:::*",
     ]
   }
+  statement {
+    actions = [
+      "kms:Describe*",
+      "kms:List*",
+      "kms:Get*",
+      "kms:Decrypt*",
+      "kms:ReEncrypt*",
+      "kms:GenerateDataKey*"
+    ]
+    resources = [var.existing_kms_key_alias != "" ? data.aws_kms_alias.default.0.target_key_arn : "*"]
+  }
 
   statement {
     actions = [
@@ -129,7 +140,7 @@ resource "aws_lambda_function" "lambda" {
   environment {
     variables = { #https://docs.aws.amazon.com/general/latest/gr/rande.html#asm_region
       SECRETS_MANAGER_ENDPOINT = var.secretsmanager_vpc_endpoint == "" ? "https://secretsmanager.${data.aws_region.current.name}.amazonaws.com" : var.secretsmanager_vpc_endpoint
-      EXCLUDE_CHARACTERS = ",%<>+*&-=$[](){}~!;:/@\"'\\|`#"
+      EXCLUDE_CHARACTERS       = ",%<>+*&-=$[](){}~!;:/@\"'\\|`#"
     }
   }
 }
