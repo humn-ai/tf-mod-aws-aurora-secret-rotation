@@ -1,11 +1,11 @@
 data "aws_kms_alias" "default" {
   count = var.existing_kms_key_alias != "" ? 1 : 0
-  name  = "alias/${var.existing_kms_key_alias}"
+  name  = var.existing_kms_key_alias
 }
 
 resource "aws_secretsmanager_secret" "default" {
   count               = var.enabled ? 1 : 0
-  name                = var.existing_kms_key_alias != "" ? "humn/${var.environment}/${var.existing_kms_key_alias}/rds/${var.name}" : "humn/${var.environment}/rds/${var.name}"
+  name                = var.existing_kms_key_alias != "" ? "humn/${var.environment}/${replace(var.existing_kms_key_alias, "alias/", "")}/rds/${var.name}" : "humn/${var.environment}/rds/${var.name}"
   description         = "RDS secret for ${var.name}"
   rotation_lambda_arn = aws_lambda_function.lambda.0.arn
   rotation_rules {
