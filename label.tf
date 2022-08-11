@@ -10,7 +10,7 @@ module "label" {
 }
 
 module "lambda_label" {
-  source             = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  source             = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.25.0"
   namespace          = var.namespace
   environment        = var.environment
   name               = var.name
@@ -21,7 +21,7 @@ module "lambda_label" {
 }
 
 module "kms_label" {
-  source             = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  source             = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.25.0"
   namespace          = var.namespace
   environment        = var.environment
   name               = var.name
@@ -43,7 +43,7 @@ module "role_label" {
 }
 
 module "policy_label" {
-  source             = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.19.2"
+  source             = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.25.0"
   namespace          = var.namespace
   environment        = var.environment
   name               = var.name
