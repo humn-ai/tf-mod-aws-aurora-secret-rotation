@@ -64,17 +64,15 @@ data "aws_iam_policy_document" "rotation" {
 
 // Lambda Policies
 
-resource "aws_iam_policy_attachment" "basic_execution" {
+resource "aws_iam_role_policy_attachment" "basic_execution" {
   count      = var.enabled ? 1 : 0
-  name       = "lambda-rds-rotation-execution-policy-${var.environment}-${var.name}"
-  roles      = [aws_iam_role.lambda.0.name]
+  role       = aws_iam_role.lambda.0.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-resource "aws_iam_policy_attachment" "vpc_execution" {
+resource "aws_iam_role_policy_attachment" "vpc_execution" {
   count      = var.enabled ? 1 : 0
-  name       = "lambda-rds-rotation-execution-policy-${var.environment}-${var.name}"
-  roles      = [aws_iam_role.lambda.0.name]
+  role      = aws_iam_role.lambda.0.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
 }
 
