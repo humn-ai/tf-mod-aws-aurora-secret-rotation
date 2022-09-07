@@ -30,4 +30,7 @@ resource "aws_secretsmanager_secret_version" "default" {
     "port": "${lookup(var.secret_config, "port", "")}"
   }
   EOF
+  lifecycle {
+    ignore_changes = [secret_string, version_id]
+  }
 }
